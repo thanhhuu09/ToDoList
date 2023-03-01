@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-var listItems = [];
+let listItems = [];
 
 app.set('view engine', 'ejs');
 
