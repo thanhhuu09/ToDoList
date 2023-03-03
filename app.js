@@ -2,23 +2,19 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const app = express();
 
+const date = require(__dirname + "/date.js");
+
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
-let items = ["Buy Book", "Drink Coffee", "Drink beer"];
-let workItems = [];
+const items = ["Buy Book", "Drink Coffee", "Drink beer"];
+const workItems = [];
 
 //GET Home page
 app.get("/", function(req, res){
-    const date = new Date();
-    const options = {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-    };
-    let currentDay = date.toLocaleDateString("vi", options);
-    res.render("list", {listTitle: currentDay, newListItem: items});
+    const day = date.getDate();
+    res.render("list", {listTitle: day, newListItem: items});
 });
 
 //GET Work page
@@ -31,7 +27,7 @@ app.get("/work", function(req, res) {
  });
 //POST Home Page
 app.post("/", function(req, res){
-    let item = req.body.newItem;
+    const item = req.body.newItem;
 
     if (req.body.list === "Work") {
         workItems.push(item);
